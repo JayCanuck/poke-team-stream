@@ -1,0 +1,42 @@
+{
+  "name": "poke-team-stream-widget",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "files": [
+    "build"
+  ],
+  "main": "./build/poke-team-stream-widget.umd.cjs",
+  "module": "./build/poke-team-stream-widget.js",
+  "exports": {
+    ".": {
+      "import": "./build/poke-team-stream-widget.js",
+      "require": "./build/poke-team-stream-widget.umd.cjs"
+    }
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "tsc && vite build",
+    "clean": "rimraf build",
+    "lint": "eslint src --ext js,jsx,ts,tsx",
+    "fix": "eslint src --ext js,jsx,ts,tsx --fix",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-tsconfig-paths": "^4.2.1"
+  }
+}

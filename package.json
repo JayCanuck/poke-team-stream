@@ -1,0 +1,25 @@
+{
+  "name": "poke-team-stream",
+  "version": "0.1.0",
+  "description": "Streaming utility for displaying and remotely updating team roster via WebRTC",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start --workspace=packages/webapp",
+    "build": "npm run build --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "fix": "npm run fix --workspaces --if-present",
+    "preview": "npm run start --workspace=packages/webapp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JayCanuck/poke-team-stream.git"
+  },
+  "author": "Jason Robitaille",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/JayCanuck/poke-team-stream/issues"
+  },
+  "homepage": "https://github.com/JayCanuck/poke-team-stream#readme",
+  "workspaces":["packages/*"]
+}
