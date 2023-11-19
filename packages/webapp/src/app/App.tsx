@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { ThemeProvider } from '../context/theme-provider';
-import { WebRTCProvider } from '../context/webrtc-provider';
+import Container from '@mui/material/Container';
+import { useCallback, useState } from 'react';
 import { Connect } from '../screens/Connect';
 import { Main } from '../screens/Main';
 
-function App() {
-  const [isConnected] = useState(true);
+export const App: React.FC = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleLogin = useCallback(() => setLoggedIn(true), [setLoggedIn]);
+  const handleLogout = useCallback(() => setLoggedIn(false), [setLoggedIn]);
 
   return (
-    <ThemeProvider>
-      <WebRTCProvider>{!isConnected ? <Connect /> : <Main />}</WebRTCProvider>
-    </ThemeProvider>
+    <Container component='main' sx={{ height: '100%' }}>
+      {!loggedIn ? <Connect onLogin={handleLogin} /> : <Main onLogout={handleLogout} />}
+    </Container>
   );
-}
-
-export default App;
+};
