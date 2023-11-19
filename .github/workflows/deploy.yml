@@ -38,7 +38,10 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build
-        run: npm run build
+        run: npm run build -- --mode development
+        env:
+          NODE_ENV: development
+          VITE_SIGNAL_SERVER: ${{ secrets.VITE_SIGNAL_SERVER }}
       - name: Collect build artifacts
         run: |
               # Collect webapp and widget build files
