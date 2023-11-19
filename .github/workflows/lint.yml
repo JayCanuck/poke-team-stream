@@ -1,0 +1,22 @@
+# Simple workflow for linting codebase
+name: Lint static code analysis with ESLint
+
+# Triggers the workflow on push or pull request events
+on: [push, pull_request]
+
+jobs:
+  # Single lint job since we're just linting
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Lint
+        run: npm run lint -- --max-warnings=0
