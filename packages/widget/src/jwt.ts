@@ -53,10 +53,10 @@ export const loadKeys = async (existing?: JsonWebKeyPair | null) => {
       true,
       ['sign', 'verify']
     );
-    const privateJWK = await exportKey(privateKey);
-    const publicJWK = await exportKey(publicKey);
     privateKey = generatedKeyPair.privateKey;
     publicKey = generatedKeyPair.publicKey;
+    const privateJWK = await exportKey(privateKey);
+    const publicJWK = await exportKey(publicKey);
 
     return {
       privateKey: privateJWK,
