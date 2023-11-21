@@ -183,7 +183,7 @@ export const SpritePicker: React.FC<SpritePickerProps> = ({ speciesId }) => {
                     {sprite.form || '\u00A0'}
                   </Typography>
                 )}
-                <Draggable type={DragGroup.SPRITE} item={{ speciesId, sprite }} onDragEnd={handleDragEnd}>
+                <Draggable type={DragGroup.Sprite} item={{ speciesId, sprite }} onDragEnd={handleDragEnd}>
                   <CenterContent width='8vw' height='8vw' minHeight='100px' minWidth='100px'>
                     <SpriteImage src={sprite.url} gameSprite={sprite.gameSprite} />
                   </CenterContent>

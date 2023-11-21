@@ -3,7 +3,7 @@ import type { DragSourceMonitor as DragSourceMonitorBase, DropTargetMonitor as D
 import type { Sprite } from './sprite.types';
 
 export enum DragGroup {
-  SPRITE = 'sprite-drag'
+  Sprite = 'sprite-drag'
 }
 
 export interface DragObject {

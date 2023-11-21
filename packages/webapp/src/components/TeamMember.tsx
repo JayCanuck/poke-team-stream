@@ -39,7 +39,7 @@ export const TeamMember: React.FC<TeamMemberProps> = ({ index, ...rest }) => {
   const [deltaY, setDeltaY] = useState(0);
   const [{ canDrop, isOver }, drop] = useDrop<DragObject, DropResult, DropCollectedProps>(
     () => ({
-      accept: DragGroup.SPRITE,
+      accept: DragGroup.Sprite,
       drop: () => ({
         index
       }),
