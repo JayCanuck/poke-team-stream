@@ -1,11 +1,11 @@
 import { base64url } from 'rfc4648';
+import { MAX_LIFE } from './config';
 
 const ALGORITHM_NAME = 'RSASSA-PKCS1-v1_5';
 const ALGORITHM_MODULUS_LENGTH = 2048;
 const ALGORITHM_PUBLIC_EXPONENT = new Uint8Array([1, 0, 1]);
 const ALGORITHM_HASH = 'SHA-256';
 const ALGORITHM_JWT = 'RS256';
-const MAX_LIFE = 1000 * 60 * 60 * 24; // 24 hours
 
 let privateKey: CryptoKey;
 let publicKey: CryptoKey;
@@ -35,11 +35,13 @@ export interface JsonWebKeyPair {
 // Loads JWK pair into memory.
 // When existing keys are passed in, imports the keys, otherwise generates a new pair
 // When new keys are generated, they will be returned
-export const loadKeys = async (existing?: JsonWebKeyPair) => {
+export const loadKeys = async (existing?: JsonWebKeyPair | null) => {
   if (existing) {
     // future: validate keys are good, for now errors will throw on failure
     privateKey = await importKey(existing.privateKey, ['sign']);
     publicKey = await importKey(existing.publicKey, ['verify']);
+
+    return existing;
   } else {
     const generatedKeyPair = await crypto.subtle.generateKey(
       {

@@ -1,5 +1,40 @@
+import { start } from './connection';
+import { TeamState, renderTeam, updateTeam } from './team';
 import './index.css';
 
-export const render = () => {
-  console.log('PokeTeamStream widget render');
-};
+interface WidgetLoadDetails {
+  channel: {
+    apiToken: string;
+    avatar: string;
+    id: string;
+    providerId: string;
+    username: string;
+  };
+  fieldData: {
+    password: string;
+    signalServer: string;
+  };
+}
+
+type WidgetLoadEvent = CustomEvent<WidgetLoadDetails>;
+
+window.addEventListener('onWidgetLoad', (ev: Event) => {
+  renderTeam().then(async () => {
+    const {
+      detail: {
+        channel: { username: key },
+        fieldData: { password, signalServer }
+      }
+    } = ev as WidgetLoadEvent;
+
+    await start({
+      key,
+      password,
+      signalServer,
+      onMessage: msg => {
+        updateTeam(msg as unknown as TeamState);
+      }
+    });
+    console.log('PokeTeamStream widget connected to signal server and awaiting connections');
+  });
+});
