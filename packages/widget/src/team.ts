@@ -66,7 +66,7 @@ function removeChildren(parent: Element) {
 }
 
 export const renderTeam = async () => {
-  state = (await window.SE_API.store.get(STORE_TEAM_KEY)) || state;
+  state = (await SE_API.store.get(STORE_TEAM_KEY)) || state;
 
   const team = document.createElement('main');
   team.id = ELEMENT_ID;
@@ -117,5 +117,5 @@ export const updateTeam = async (update: TeamState) => {
     }
   }
 
-  await window.SE_API.store.set(STORE_TEAM_KEY, state);
+  await SE_API.store.set(STORE_TEAM_KEY, state);
 };

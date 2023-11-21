@@ -19,9 +19,9 @@ let authenticated: boolean;
 
 const ensureJWKLoaded = async () => {
   if (!authJWK) {
-    authJWK = await window.SE_API.store.get<JsonWebKeyPair>(STORE_AUTH_KEY);
+    authJWK = await SE_API.store.get<JsonWebKeyPair>(STORE_AUTH_KEY);
     authJWK = await loadKeys(authJWK);
-    await window.SE_API.store.set(STORE_AUTH_KEY, authJWK);
+    await SE_API.store.set(STORE_AUTH_KEY, authJWK);
   }
 };
 

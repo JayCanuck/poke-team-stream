@@ -18,6 +18,4 @@ interface StreamElementsAPI {
   readonly store: StreamElementsStore;
 }
 
-interface Window {
-  readonly SE_API: StreamElementsAPI;
-}
+declare const SE_API: StreamElementsAPI;
