@@ -1,12 +1,11 @@
 /* eslint-disable import/no-default-export */
 import { resolve } from 'node:path';
-import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [tsconfigPaths()],
   build: {
     outDir: 'build',
     chunkSizeWarningLimit: 10_000,
