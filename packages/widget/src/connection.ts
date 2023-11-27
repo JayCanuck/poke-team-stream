@@ -47,7 +47,7 @@ export const start = async ({ key, password, onMessage, ...options }: Connection
         onMessage(msg, channel);
       } else if (msg.type === 'auth-pwd') {
         // attempting to auth via password
-        if (typeof msg.password !== 'string') {
+        if (typeof msg.password === 'string') {
           if (password === msg.password) {
             // send successful auth response
             authenticated = true;
@@ -72,7 +72,7 @@ export const start = async ({ key, password, onMessage, ...options }: Connection
         }
       } else if (msg.type === 'auth-token') {
         // attempting to auth via JWT
-        if (typeof msg.token !== 'string') {
+        if (typeof msg.token === 'string') {
           verify(msg.token as string).then(async isValid => {
             if (isValid) {
               // send successful auth response
