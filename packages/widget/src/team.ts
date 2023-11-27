@@ -114,10 +114,9 @@ export const updateTeam = async (update: TeamState) => {
     const img = spriteImage(i);
 
     applyStagger(i, container);
+    removeChildren(inner);
     if (img) {
       inner.appendChild(img);
-    } else {
-      removeChildren(inner);
     }
   }
 
