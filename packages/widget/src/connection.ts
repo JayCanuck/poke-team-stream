@@ -44,9 +44,7 @@ export const start = async ({ key, password, onMessage, ...options }: Connection
       authenticated = false;
     },
     onMessage: (msg, channel) => {
-      if (authenticated) {
-        onMessage(msg, channel);
-      } else if (msg.type === 'auth-pwd') {
+      if (msg?.type === 'auth-pwd') {
         // attempting to auth via password
         if (typeof msg.password === 'string') {
           if (password === msg.password) {
@@ -72,7 +70,7 @@ export const start = async ({ key, password, onMessage, ...options }: Connection
             JSON.stringify({ type: 'auth-failure', code: AuthErrorCodes.BadRequest, message: 'Bad request' })
           );
         }
-      } else if (msg.type === 'auth-token') {
+      } else if (msg?.type === 'auth-token') {
         // attempting to auth via JWT
         if (typeof msg.token === 'string') {
           verify(msg.token as string).then(async isValid => {
@@ -95,6 +93,8 @@ export const start = async ({ key, password, onMessage, ...options }: Connection
             JSON.stringify({ type: 'auth-failure', code: AuthErrorCodes.BadRequest, message: 'Bad request' })
           );
         }
+      } else if (authenticated) {
+        onMessage(msg, channel);
       }
     }
   });
