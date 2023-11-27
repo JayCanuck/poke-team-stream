@@ -116,7 +116,7 @@ export const useWebRTC = (): [WebRTCState, WebRTCActions] => {
         };
 
         // Create a data channel
-        channel.current = connection.current.createDataChannel(key);
+        channel.current = connection.current.createDataChannel(key, { ordered: true });
 
         // Set up the data channel event handlers
         channel.current.onopen = () => {
@@ -137,7 +137,10 @@ export const useWebRTC = (): [WebRTCState, WebRTCActions] => {
           disconnect();
         };
         channel.current.onclose = () => {
-          if (['disconnected', 'closed', 'failed'].includes(connection.current!.connectionState)) {
+          if (
+            connection.current &&
+            ['disconnected', 'closed', 'failed'].includes(connection.current!.connectionState)
+          ) {
             // overall connection closed, update readyState
             setReadyState(ReadyState.Closed);
             clearRefs();
@@ -175,6 +178,7 @@ export const useWebRTC = (): [WebRTCState, WebRTCActions] => {
   const sendMessage = useCallback(
     (message: Record<string, unknown>) => {
       if (channel.current && readyState === ReadyState.Connected) {
+        console.log('sendMessage', message);
         channel.current.send(JSON.stringify(message));
       }
     },

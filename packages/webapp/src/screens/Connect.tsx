@@ -8,20 +8,21 @@ import { CenterContent } from '../components/CenterContent';
 import { LOCALSTORAGE_NAME_KEY } from '../config';
 
 export interface SubmitValues {
-  name: string;
-  password: string;
+  name?: string;
+  password?: string;
 }
 
 export interface ConnectProps {
+  initial?: SubmitValues;
   error?: Error;
   onSubmit: (values: SubmitValues) => void;
 }
 
-export const Connect: React.FC<ConnectProps> = ({ error, onSubmit }) => {
+export const Connect: React.FC<ConnectProps> = ({ initial, error, onSubmit }) => {
   const formik = useFormik({
     initialValues: {
-      username: window.localStorage.getItem(LOCALSTORAGE_NAME_KEY) || '',
-      password: ''
+      username: initial?.name || window.localStorage.getItem(LOCALSTORAGE_NAME_KEY) || '',
+      password: initial?.password || ''
     },
     validate: values => {
       const errors: Partial<typeof values> = {};
@@ -30,7 +31,6 @@ export const Connect: React.FC<ConnectProps> = ({ error, onSubmit }) => {
       return errors;
     },
     onSubmit: values => {
-      console.log('onSubmit', values);
       onSubmit({ name: values.username, password: values.password });
     }
   });

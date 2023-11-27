@@ -49,22 +49,21 @@ export const App: React.FC = () => {
     [transition]
   );
 
+  const handleConnected = useCallback(() => {
+    if (submitValues.current?.password) submitValues.current.password = undefined;
+    transition(ViewType.Main);
+  }, [transition]);
+
   const View = useMemo(() => {
     switch (activeView) {
       case ViewType.Connect:
-        return <Connect error={error.current} onSubmit={handleSubmit} />;
+        return <Connect initial={submitValues.current} error={error.current} onSubmit={handleSubmit} />;
       case ViewType.Connecting:
-        return (
-          <Connecting
-            details={submitValues.current}
-            onError={handleError}
-            onConnected={() => transition(ViewType.Main)}
-          />
-        );
+        return <Connecting details={submitValues.current} onError={handleError} onConnected={handleConnected} />;
       case ViewType.Main:
         return <Main onDisconnected={() => transition(ViewType.Connect)} />;
     }
-  }, [activeView, handleError, handleSubmit, transition]);
+  }, [activeView, handleConnected, handleError, handleSubmit, transition]);
 
   return (
     <Container component='main' sx={{ height: '100%' }}>

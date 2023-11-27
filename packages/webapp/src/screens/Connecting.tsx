@@ -24,7 +24,8 @@ export const Connecting: React.FC<ConnectingProps> = ({ details, onConnected, on
       // can do async transition animation here then:
       onConnected();
     }
-  }, [authenticated, onConnected]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authenticated]);
 
   useEffect(() => {
     if (error) onError(error);

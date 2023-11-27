@@ -1,5 +1,5 @@
-import { useCallback, useReducer } from 'react';
-import { ConnectionActions /*, useConnection*/ } from '../hooks/use-connection';
+import { useCallback, useEffect, useReducer } from 'react';
+import { ConnectionActions, useConnection } from '../hooks/use-connection';
 import { Sprite } from '../sprite.types';
 import { TeamContext, TeamState } from './team-context';
 
@@ -11,6 +11,7 @@ const initialState = (): TeamState => ({
 });
 
 export type TeamReducerActions = (
+  | { type: 'init'; value: TeamState }
   | { type: 'update-sprite'; index: number; value: Sprite }
   | { type: 'update-scale'; index: number; value: number }
   | { type: 'zoom-in'; index: number }
@@ -27,6 +28,8 @@ const reducer = (state: TeamState, action: TeamReducerActions): TeamState => {
   const newState = { ...state, sprites: [...state.sprites], scales: [...state.scales] };
 
   switch (action.type) {
+    case 'init':
+      return action.value;
     case 'update-sprite':
       newState.sprites[action.index] = action.value;
       break;
@@ -62,9 +65,7 @@ interface TeamProviderProps {
 
 export const TeamProvider: React.FC<TeamProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState());
-  //const [, { sendMessage }] = useConnection();
-  // dummy sendMessage for testing
-  const sendMessage = useCallback((newState: Record<string, unknown>) => console.log(newState), []);
+  const [{ lastMessage }, { sendMessage }] = useConnection();
 
   const update = useCallback(
     (type: TeamReducerActions['type'], params: Omit<TeamReducerActions, 'type' | 'sendMessage'> = {}) => {
@@ -73,6 +74,7 @@ export const TeamProvider: React.FC<TeamProviderProps> = ({ children }) => {
     [sendMessage, dispatch]
   );
 
+  const init = useCallback((value: TeamState) => update('init', { value }), [update]);
   const updateSprite = useCallback(
     (index: number, value: Sprite) => update('update-sprite', { index, value }),
     [update]
@@ -83,6 +85,12 @@ export const TeamProvider: React.FC<TeamProviderProps> = ({ children }) => {
   const updateSpacing = useCallback((value: number) => update('update-spacing', { value }), [update]);
   const updateStagger = useCallback((value: number) => update('update-stagger', { value }), [update]);
   const reset = useCallback(() => update('reset'), [update]);
+
+  useEffect(() => {
+    if (lastMessage?.type === 'team') {
+      init(lastMessage?.state);
+    }
+  }, [init, lastMessage]);
 
   return (
     <TeamContext.Provider
