@@ -55,6 +55,8 @@ const spriteImage = (index: number) => {
       }
     };
 
+    img.src = sprite.url;
+
     return img;
   }
 };
