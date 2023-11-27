@@ -97,6 +97,8 @@ export const renderTeam = async () => {
   document.body.appendChild(team);
 };
 
+export const getActiveTeam = () => state;
+
 export const updateTeam = async (update: TeamState) => {
   state = update;
 

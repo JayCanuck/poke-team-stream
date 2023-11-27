@@ -1,5 +1,6 @@
 import { SE_STORE_KEY_PREFIX } from './config';
 import { JsonWebKeyPair, loadKeys, sign, verify } from './jwt';
+import { getActiveTeam } from './team';
 import { RTCStartOptions, start as startRTC } from './webrtc';
 
 const STORE_AUTH_KEY = `${SE_STORE_KEY_PREFIX}-auth`;
@@ -52,6 +53,7 @@ export const start = async ({ key, password, onMessage, ...options }: Connection
             // send successful auth response
             authenticated = true;
             channel.send(JSON.stringify({ type: 'auth-success' }));
+            channel.send(JSON.stringify({ type: 'team', state: getActiveTeam() }));
             // asynchronously send a token for future passwordless usage
             generateToken(authData).then(token => {
               if (token) channel.send(JSON.stringify({ type: 'auth-new-token', name: key, token }));
@@ -78,6 +80,7 @@ export const start = async ({ key, password, onMessage, ...options }: Connection
               // send successful auth response
               authenticated = true;
               channel.send(JSON.stringify({ type: 'auth-success' }));
+              channel.send(JSON.stringify({ type: 'team', state: getActiveTeam() }));
               // asynchronously send a refreshed token
               const refreshed = await generateToken(authData);
               if (refreshed) channel.send(JSON.stringify({ type: 'auth-new-token', name: key, token: refreshed }));
