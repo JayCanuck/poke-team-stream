@@ -19,6 +19,10 @@ export const ICE_SERVERS = import.meta.env.VITE_ICE_SERVERS
 // May seem long, but some free webservice hosting (for signal server), spin-down inactive servers
 export const CONNECTION_TIMEOUT = parseInt(import.meta.env.VITE_CONNECTION_TIMEOUT) || 45_000;
 
+// Localstorage auth cache keys
+export const LOCALSTORAGE_NAME_KEY = import.meta.env.VITE_LOCALSTORAGE_NAME_KEY || 'poketeamstream-name';
+export const LOCALSTORAGE_TOKEN_KEY = import.meta.env.VITE_LOCALSTORAGE_TOKEN_KEY || 'poketeamstream-token';
+
 // Timeout for PokeAPI usage (default 10)
 export const POKEAPI_TIMEOUT = parseInt(import.meta.env.VITE_POKEAPI_TIMEOUT) || 10_000;
 

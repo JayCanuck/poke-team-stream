@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useRef, useState } from 'react';
 import { CONNECTION_TIMEOUT, ICE_SERVERS, SIGNAL_SERVER } from '../config';
 
@@ -35,14 +36,14 @@ export enum ReadyState {
 }
 
 export interface WebRTCState {
-  lastMessage: Record<string, unknown> | null;
+  lastMessage: Record<string, any> | null;
   readyState: ReadyState;
   error: Error | null;
 }
 
 export interface WebRTCActions {
   connect: (key: string) => void;
-  sendMessage: (message: Record<string, unknown>) => void;
+  sendMessage: (message: Record<string, any>) => void;
   disconnect: () => void;
 }
 
@@ -51,7 +52,7 @@ export const useWebRTC = (): [WebRTCState, WebRTCActions] => {
   const connection = useRef<RTCPeerConnection | null>(null);
   const channel = useRef<RTCDataChannel | null>(null);
   const timeoutId = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [lastMessage, setLastMessage] = useState<Record<string, unknown> | null>(null);
+  const [lastMessage, setLastMessage] = useState<Record<string, any> | null>(null);
   const [readyState, setReadyState] = useState(ReadyState.Closed);
   const [error, setError] = useState<Error | null>(null);
 

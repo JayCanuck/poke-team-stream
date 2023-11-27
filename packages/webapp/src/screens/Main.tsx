@@ -8,32 +8,28 @@ import { ResetButton } from '../components/ResetButton';
 import { RosterControls } from '../components/RosterControls';
 import { SpritePicker } from '../components/SpritePicker';
 import { TeamRoster } from '../components/TeamRoster';
+import { useConnection } from '../hooks/use-connection';
 import { PokemonSpeciesName } from '../pokeapi.types';
 
 export interface MainProps {
-  onLogout: () => void;
+  onDisconnected: () => void;
 }
 
-export const Main: React.FC<MainProps> = ({ onLogout }) => {
-  // const [{ readyState, error }, { disconnect }] = useConnection();
+export const Main: React.FC<MainProps> = ({ onDisconnected }) => {
+  const [, { disconnect }] = useConnection();
   // todo: extract these state into a standalone hook which can communicate changes over useConnection()
   const [pkmn, setPkmn] = useState<PokemonSpeciesName | null>(null);
   const changePkmn = useCallback((value: PokemonSpeciesName | null) => setPkmn(value), [setPkmn]);
-  const handleLogout = useCallback(() => {
-    onLogout();
-    // disconnect();
-  }, [onLogout]);
 
-  /*useEffect(() => {
-    if (readyState === ReadyState.Closed || error) {
-      onLogout();
-    }
-  }, [error, onLogout, readyState]);*/
+  const handleDisconnect = useCallback(() => {
+    disconnect();
+    onDisconnected();
+  }, [disconnect, onDisconnected]);
 
   // todo: combine autocomplete and picker
   return (
     <div>
-      <Button onClick={handleLogout}>Disconnect</Button>
+      <Button onClick={handleDisconnect}>Disconnect</Button>
       <PokeAutocomplete onChange={changePkmn} />
       <SpritePicker speciesId={pkmn?.pokemon_species_id} />
       <Box mt={6} mb={2}>

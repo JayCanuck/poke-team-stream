@@ -54,7 +54,7 @@ export const start = async ({ key, password, onMessage, ...options }: Connection
             channel.send(JSON.stringify({ type: 'auth-success' }));
             // asynchronously send a token for future passwordless usage
             generateToken(authData).then(token => {
-              if (token) channel.send(JSON.stringify({ type: 'auth-new-token', token }));
+              if (token) channel.send(JSON.stringify({ type: 'auth-new-token', name: key, token }));
             });
           } else {
             channel.send(
@@ -80,7 +80,7 @@ export const start = async ({ key, password, onMessage, ...options }: Connection
               channel.send(JSON.stringify({ type: 'auth-success' }));
               // asynchronously send a refreshed token
               const refreshed = await generateToken(authData);
-              if (refreshed) channel.send(JSON.stringify({ type: 'auth-new-token', token: refreshed }));
+              if (refreshed) channel.send(JSON.stringify({ type: 'auth-new-token', name: key, token: refreshed }));
             } else {
               channel.send(
                 JSON.stringify({ type: 'auth-failure', code: AuthErrorCodes.Invalid, message: 'Token not valid' })

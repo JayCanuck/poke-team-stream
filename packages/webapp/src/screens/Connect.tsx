@@ -3,21 +3,24 @@ import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-// import { useEffect } from 'react';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { CenterContent } from '../components/CenterContent';
-// import { ReadyState, useConnection } from '../hooks/use-connection';
+import { LOCALSTORAGE_NAME_KEY } from '../config';
 
-export interface ConnectProps {
-  onLogin: () => void;
+export interface SubmitValues {
+  name: string;
+  password: string;
 }
 
-export const Connect: React.FC<ConnectProps> = ({ onLogin }) => {
-  // const [{ readyState, error }, { connect }] = useConnection();
-  const error = useMemo<Error | null>(() => null, []);
+export interface ConnectProps {
+  error?: Error;
+  onSubmit: (values: SubmitValues) => void;
+}
+
+export const Connect: React.FC<ConnectProps> = ({ error, onSubmit }) => {
   const formik = useFormik({
     initialValues: {
-      username: '',
+      username: window.localStorage.getItem(LOCALSTORAGE_NAME_KEY) || '',
       password: ''
     },
     validate: values => {
@@ -28,9 +31,7 @@ export const Connect: React.FC<ConnectProps> = ({ onLogin }) => {
     },
     onSubmit: values => {
       console.log('onSubmit', values);
-      onLogin();
-      //connect('mygroupkey');
-      //connect(values.username);
+      onSubmit({ name: values.username, password: values.password });
     }
   });
 
@@ -38,19 +39,6 @@ export const Connect: React.FC<ConnectProps> = ({ onLogin }) => {
     if (error) formik.setSubmitting(false);
   }, [error, formik]);
 
-  /*useEffect(() => {
-    if (readyState === ReadyState.Connected) {
-      console.log('login');
-      formik.setSubmitting(false);
-      onLogin();
-    } else if (error && formik.isSubmitting) {
-      console.log('login failed');
-      formik.setSubmitting(false);
-    }
-  }, [error, formik, onLogin, readyState]);*/
-
-  // todo: pokeball animation on connect attempt
-  // todo: if has
   return (
     <CenterContent>
       <Box width='250px' maxWidth='90%' pb={4}>
