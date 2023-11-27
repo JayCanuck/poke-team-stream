@@ -98,7 +98,7 @@ export const renderTeam = async () => {
 export const updateTeam = async (update: TeamState) => {
   state = update;
 
-  const team = document.getElementById('main');
+  const team = document.getElementById(ELEMENT_ID);
   if (!team) return;
 
   const row = <HTMLDivElement>team.children[0];
