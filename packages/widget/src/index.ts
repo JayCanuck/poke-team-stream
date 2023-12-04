@@ -23,14 +23,13 @@ window.addEventListener('onWidgetLoad', (ev: Event) => {
     const {
       detail: {
         channel: { username: key },
-        fieldData: { password, signalServer }
+        fieldData: { password }
       }
     } = ev as WidgetLoadEvent;
 
     await start({
       key,
       password,
-      signalServer,
       onMessage: msg => {
         updateTeam(msg as unknown as TeamState);
       }

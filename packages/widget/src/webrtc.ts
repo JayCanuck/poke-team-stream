@@ -1,4 +1,4 @@
-import { ICE_SERVERS } from './config';
+import { ICE_SERVERS, SIGNAL_SERVER } from './config';
 
 // Signal socket interfaces
 
@@ -27,7 +27,6 @@ type SignalSocketPayload = InitSignalPayload | DescriptionSignalPayload | Candid
 // WebRTC start connection types
 
 export interface RTCStartOptions {
-  signalServer: string;
   key: string;
   onInitRTC: () => void;
   onMessage: (message: Record<string, unknown>, channel: RTCDataChannel) => void;
@@ -92,9 +91,9 @@ const initPeerConnection = ({ key, onInitRTC, onMessage }: InitPeerConnectionOpt
 
 // Returns promise that resolves after signal server is connected and waiting for client
 // Will automatically handle incoming peers and relay received WebRTC messages
-export const start = ({ signalServer, key, onInitRTC, onMessage }: RTCStartOptions) => {
+export const start = ({ key, onInitRTC, onMessage }: RTCStartOptions) => {
   return new Promise<void>(resolve => {
-    signalSocket = new WebSocket(signalServer);
+    signalSocket = new WebSocket(SIGNAL_SERVER);
     signalSocket.addEventListener('open', () => {
       initPeerConnection({ key, onInitRTC, onMessage });
       signalSocket.send(JSON.stringify({ key, type: 'init' }));

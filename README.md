@@ -39,11 +39,6 @@ Generally I've deployed the website to a webhost at root level, with widget at `
       "label": "Set a password for website access",
       "type": "password",
       "value": ""
-    },
-    "signalServer": {
-      "label": "Signal server address",
-      "type": "text",
-      "value": ""
     }
   }
 ```
@@ -55,8 +50,7 @@ Generally I've deployed the website to a webhost at root level, with widget at `
 ```
 
 6. Save the customizations by hitting the `DONE` button. Congratulations, the difficult part is done! 
-7. On the left side menu, there will now be 2 fields you can fill out:
+7. On the left side menu, there will now a field you can fill out:
  * `Set a password for website access` - This can be anything. It's your personal password you can then use on the website. It will be tied to your Twitch channel name. This password will be stored within StreamElements storage and not sent to any third parties.
- * `Signal server address` - This is the WebSocket address for the signal server.  If you aren't hosting the server itself, this address will likely be provided by whoever is providing this webapp/widget.
 
- **Note: substitute https://poketeam.stream for the server URL as needed**
+ **Note: substitute https://poketeam.stream for the deployed webapp/widget server URL as needed**
