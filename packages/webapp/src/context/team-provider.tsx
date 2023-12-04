@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useReducer } from 'react';
+import { useThrottledCallback } from 'use-debounce';
 import { ConnectionActions, useConnection } from '../hooks/use-connection';
 import { Sprite } from '../sprite.types';
 import { TeamContext, TeamState } from './team-context';
@@ -67,11 +68,13 @@ export const TeamProvider: React.FC<TeamProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState());
   const [{ lastMessage }, { sendMessage }] = useConnection();
 
+  const throttledSendMessage = useThrottledCallback(sendMessage, 1000);
+
   const update = useCallback(
     (type: TeamReducerActions['type'], params: Omit<TeamReducerActions, 'type' | 'sendMessage'> = {}) => {
-      dispatch({ type, ...params, sendMessage } as TeamReducerActions);
+      dispatch({ type, ...params, sendMessage: throttledSendMessage } as TeamReducerActions);
     },
-    [sendMessage, dispatch]
+    [throttledSendMessage, dispatch]
   );
 
   const init = useCallback((value: TeamState) => update('init', { value }), [update]);
