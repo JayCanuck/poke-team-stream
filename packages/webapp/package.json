@@ -30,7 +30,8 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "styled-components": "^6.1.0",
-    "typeface-open-sans": "^1.1.13"
+    "typeface-open-sans": "^1.1.13",
+    "use-debounce": "^10.0.0"
   },
   "devDependencies": {
     "@types/autosuggest-highlight": "^3.2.3",
@@ -53,6 +54,7 @@
     "rimraf": "^5.0.5",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
+    "vite-plugin-favicons-inject": "^2.2.0",
     "vite-tsconfig-paths": "^4.2.1"
   }
 }
