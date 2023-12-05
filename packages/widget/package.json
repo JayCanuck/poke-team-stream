@@ -2,6 +2,10 @@
   "name": "poke-team-stream-widget",
   "private": true,
   "version": "0.1.0",
+  "author": {
+    "name": "Jason Robitaille",
+    "url": "https://jrobitaille.dev"
+  },
   "type": "module",
   "files": [
     "build"
