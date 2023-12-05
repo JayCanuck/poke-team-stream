@@ -22,13 +22,13 @@ window.addEventListener('onWidgetLoad', (ev: Event) => {
   renderTeam().then(async () => {
     const {
       detail: {
-        channel: { username: key },
+        channel: { username },
         fieldData: { password }
       }
     } = ev as WidgetLoadEvent;
 
     await start({
-      key,
+      key: username.toLocaleLowerCase(),
       password,
       onMessage: msg => {
         updateTeam(msg as unknown as TeamState);

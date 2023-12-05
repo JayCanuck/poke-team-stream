@@ -62,7 +62,7 @@ export const ConnectionProvider: React.FC<ConnectionProviderProps> = ({ children
       const token = opts.token || window.localStorage.getItem(LOCALSTORAGE_TOKEN_KEY) || undefined;
       const { password } = opts;
       options.current = { name, token, password };
-      webRTCActions.connect(name);
+      webRTCActions.connect(name.toLocaleLowerCase());
     },
     [webRTCActions]
   );
